@@ -15,7 +15,7 @@ router.post('/', async (req: Request, res: Response) => {
         const hashPassword = HmacSHA256(password, process.env.SECRET_KEY).toString();
 
         const userToFind = await db.collection('users').findOne({ email, password: hashPassword });
-        if (!userToFind) return res.status(400).json({ error: 'User is not found' });
+        if (!userToFind) return res.status(404).json({ error: 'User is not found' });
 
         const jwt = sign(
             { _id: userToFind._id, email },

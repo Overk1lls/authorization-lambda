@@ -1,7 +1,7 @@
 # authorization-lambda
 
 ## Usage
-Perform a POST request to the ```/api/signup``` endpoint with the following data in the body:
+Perform a POST request to the ```/api/v1/sign-up``` endpoint with the following data in the body:
 ```
 {
   "email": "example@gmail.com",
@@ -10,21 +10,20 @@ Perform a POST request to the ```/api/signup``` endpoint with the following data
 ```
 to get a response with status code:
 * ```201``` if user is created
-* ```400``` if invalid request or user already exists
+* ```400``` if email is not appropriate or duplicate email
 
-Perform a POST request to the ```/api/login?email=example@gmail.com&password=password``` endpoint,\
-with the parameters ```email``` and ```password``` in the query, to get a response with status code:
-* ```201``` if user is found and token is returned
-* ```400``` if invalid request
+Perform a POST request to the ```/api/v1/login``` endpoint,\
+with the same data as in previous point, to get a response with status code:
+* ```200``` if everything is ok
+* ```400``` if email is not appropriate or you entered bad credentials
 * ```404``` if user is not found
 
-Perform a GET request to the ```/api/me/:num``` endpoint, with the parameter ```num``` (any number) to get a response with status code:
-* ```200``` if user is found and data is returned
-* ```400``` if invalid request or authorization token is expired
-* ```401``` if user is not authorized
-* ```404``` if user is not found
+Perform a GET request to the ```/api/v1/me/:num``` endpoint, with the parameter ```num``` (any number) to get a response with status code:
+* ```200``` if user is found
+* ```401``` if authentication or token scheme is bad
+* ```403``` if authentication token is expired
 
-Perform a POST request to the ```/api/refresh``` endpoint to get a response with status code:
-* ```201``` new token is created
-* ```400``` invalid request (token is expired)
-* ```401``` user is not authorized
+Perform a GET request to the ```/api/v1/refresh``` endpoint to refresh the access token, and get a response with status code:
+* ```201``` if everything is ok
+* ```401``` if authentication or token scheme is bad
+* ```403``` if authentication token is expired
